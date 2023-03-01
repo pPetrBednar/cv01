@@ -16,6 +16,7 @@ create, create-drop, validate, update a none
 @Data
 public class AppUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String username;
@@ -31,4 +32,12 @@ public class AppUser {
     private List<Task> tasks = Collections.emptyList();
     @ManyToMany(mappedBy = "users")
     private List<Role> roles = Collections.emptyList();
+
+    public AppUser(String username, String password, Boolean active, LocalDateTime creationDate, LocalDateTime updateDate) {
+        this.username = username;
+        this.password = password;
+        this.active = active;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
 }
