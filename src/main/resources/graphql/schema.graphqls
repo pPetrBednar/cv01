@@ -1,0 +1,63 @@
+type Query {
+    appUser(id: ID!): AppUser!
+    #getAllAppUsers:[AppUser]
+}
+
+#query {
+#    appUser(id: 0) {
+#        id,
+#        username,
+#        active,
+#        creationDate,
+#        tasks {
+#            id,
+#            title
+#        }
+#    }
+#}
+
+type AppUser {
+    id: ID!,
+    username: String!,
+    active: Boolean!,
+    creationDate: String!,
+    updateDate: String,
+    tasks: [Task!]!
+}
+
+type Task {
+    id: ID!,
+    title: String!,
+    description: String!,
+    creationDate: String!,
+    updateDate: String
+}
+
+input AppUserInputQLDto {
+    username: String!,
+    password: String!,
+    active: Boolean!,
+    creationDate: String!,
+    updateDate: String
+}
+
+type Mutation {
+    addNewAppUser(appUserInputQLDto: AppUserInputQLDto!): AppUser!
+}
+
+#mutation M($appUserInputQLDto:AppUserInputQLDto) {
+#    addNewAppUser (appUserInputQLDto: $appUserInputQLDto) {
+#        id,
+#        username
+#    }
+#}
+#
+#{
+#"appUserInputQLDto": {
+#"username": "user101",
+#"password": "12345",
+#"active": true,
+#"creationDate": "2023-02-28T14:56:06.10753",
+#"updateDate": "2023-02-28T14:56:06.10753"
+#}
+#}

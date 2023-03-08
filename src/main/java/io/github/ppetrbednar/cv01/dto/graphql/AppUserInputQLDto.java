@@ -1,4 +1,4 @@
-package io.github.ppetrbednar.cv01.dto;
+package io.github.ppetrbednar.cv01.dto.graphql;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AppUserInputDto {
+public class AppUserInputQLDto {
     @NotNull
     @NotBlank
     @Size(max = 256, message = "Username limit 256.")
@@ -25,14 +24,14 @@ public class AppUserInputDto {
     @NotNull
     private Boolean active;
     @NotNull
-    private LocalDateTime creationDate;
-    private LocalDateTime updateDate;
+    private String creationDate;
+    private String updateDate;
 
-    public AppUserInputDto(String username, String password, Boolean active, String creationDate, String updateDate) {
+    public AppUserInputQLDto(String username, String password, Boolean active, String creationDate, String updateDate) {
         this.username = username;
         this.password = password;
         this.active = active;
-        this.creationDate = LocalDateTime.parse(creationDate, DateTimeFormatter.ISO_DATE_TIME);
-        this.updateDate = LocalDateTime.parse(updateDate, DateTimeFormatter.ISO_DATE_TIME);;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
     }
 }
