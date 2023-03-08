@@ -1,6 +1,7 @@
 package io.github.ppetrbednar.cv01.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.github.ppetrbednar.cv01.dto.TaskDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -27,4 +28,14 @@ public class Task {
     @ToString.Exclude
     @JsonIgnore
     private AppUser author;
+
+    public TaskDto toDto() {
+        return new TaskDto(
+                id,
+                title,
+                description,
+                creationDate,
+                updateDate
+        );
+    }
 }

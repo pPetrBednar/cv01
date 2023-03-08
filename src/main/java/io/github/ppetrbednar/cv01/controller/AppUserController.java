@@ -30,51 +30,30 @@ public class AppUserController {
     public ResponseEntity<Object> findById(@PathVariable final Long id) throws ResourceNotFoundException {
         var result = appUserService.findById(id);
 
-        return ResponseEntity.ok(toDto(result.get()));
+        return ResponseEntity.ok(result.get().toDto());
     }
 
     @PostMapping("")
     public ResponseEntity<Object> create(@RequestBody @Validated final AppUserInputDto dto) {
-        var result = appUserService.create(toEntity(dto));
+        var result = appUserService.create(new AppUser(dto));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(toDto(result));
+                .body(result.toDto());
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable final Long id, @RequestBody @Validated final AppUserInputDto dto) throws ResourceNotFoundException {
-        var entity = toEntity(dto);
+        var entity = new AppUser(dto);
         entity.setId(id);
         var result = appUserService.update(entity);
         return ResponseEntity
                 .status(HttpStatus.valueOf(204))
-                .body(toDto(result));
+                .body(result.toDto());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable final Long id) throws ResourceNotFoundException {
         appUserService.delete(id);
         return ResponseEntity.status(HttpStatus.valueOf(204)).build();
-    }
-
-    private static AppUser toEntity(final AppUserInputDto dto) {
-        return new AppUser(
-                dto.getUsername(),
-                dto.getPassword(),
-                dto.getActive(),
-                dto.getCreationDate(),
-                dto.getUpdateDate()
-        );
-    }
-
-    private static AppUserDto toDto(final AppUser appUser) {
-        return new AppUserDto(
-                appUser.getId(),
-                appUser.getUsername(),
-                appUser.getPassword(),
-                appUser.getActive(),
-                appUser.getCreationDate(),
-                appUser.getUpdateDate()
-        );
     }
 }
